@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="ml">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>മദ്രസ മാനേജ്‌മെന്റ് സിസ്റ്റം - ഉസ്താദ് പാനൽ</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+</head>
+<body class="bg-emerald-50 font-sans p-4">
+
+    <div class="max-w-2xl mx-auto bg-white p-6 rounded-2xl shadow-lg border border-emerald-100">
+        <h2 class="text-2xl font-bold text-center text-emerald-800 mb-6">മദ്രസ ഉസ്താദ് ഡാഷ്‌ബോർഡ്</h2>
+        
+        <!-- ടാബ് ബട്ടണുകൾ -->
+        <div class="flex border-b mb-6">
+            <button onclick="switchTab('studentTab')" id="btnStudentTab" class="flex-1 py-2 font-bold text-emerald-600 border-b-2 border-emerald-600">പുതിയ കുട്ടി രജിസ്ട്രേഷൻ</button>
+            <button onclick="switchTab('recordTab')" id="btnRecordTab" class="flex-1 py-2 font-bold text-gray-500">ഹാജർ & മാർക്ക് എട്രി</button>
+        </div>
+
+        <!-- 1. കുട്ടി രജിസ്ട്രേഷൻ ഫോം -->
+        <form id="studentForm" class="space-y-4">
+            <h3 class="font-bold text-emerald-700 text-lg">കുട്ടിയുടെ വിവരങ്ങൾ ചേർക്കുക</h3>
+            <div>
+                <label class="block text-gray-700 font-medium mb-1">അഡ്മിഷൻ നമ്പർ</label>
+                <input type="text" id="admissionNo" required class="w-full px-4 py-2 border rounded-lg">
+            </div>
+            <div>
+                <label class="block text-gray-700 font-medium mb-1">കുട്ടിയുടെ പേര്</label>
+                <input type="text" id="name" required class="w-full px-4 py-2 border rounded-lg">
+            </div>
+            <div>
+                <label class="block text-gray-700 font-medium mb-1">രക്ഷിതാവിന്റെ പേര് (Son of / Daughter of)</label>
+                <input type="text" id="sonOf" required class="w-full px-4 py-2 border rounded-lg">
+            </div>
+            <div>
+                <label class="block text-gray-700 font-medium mb-1">മൊബൈൽ നമ്പർ</label>
+                <input type="tel" id="mobile" required class="w-full px-4 py-2 border rounded-lg">
+            </div>
+            <div>
+                <label class="block text-gray-700 font-medium mb-1">പഠിക്കുന്ന ക്ലാസ്സ്</label>
+                <input type="text" id="className" required class="w-full px-4 py-2 border rounded-lg">
+            </div>
+            <div>
+                <label class="block text-gray-700 font-medium mb-1">ഫോട്ടോ ലിങ്ക് (Image URL)</label>
+                <input type="url" id="photoUrl" placeholder="ഫോട്ടോയുടെ വെബ് ലിങ്ക് ഇവിടെ നൽകുക" required class="w-full px-4 py-2 border rounded-lg">
+            </div>
+            <button type="submit" class="w-full bg-emerald-600 text-white font-bold py-3 rounded-lg hover:bg-emerald-700">കുട്ടിയെ സേവ് ചെയ്യുക</button>
+        </form>
+
+        <!-- 2. ഡാറ്റ എട്രി ഫോം (മറച്ചു വെച്ചത്) -->
+        <form id="recordForm" class="space-y-4 hidden">
+            <h3 class="font-bold text-emerald-700 text-lg">നിസ്കാരം & പരീക്ഷ മാർക്ക് അപ്ഡേറ്റ്</h3>
+            <div>
+                <label class="block text-gray-700 font-medium mb-1">അഡ്മിഷൻ നമ്പർ</label>
+                <input type="text" id="recAdmissionNo" required class="w-full px-4 py-2 border rounded-lg">
+            </div>
+            <div class="grid grid-cols-2 gap-4">
+                <div>
+                    <label class="text-sm text-gray-600">സുബ്ഹ് (Fajr)</label>
+                    <select id="fajr" class="w-full p-2 border rounded"><option value="Yes">വന്നു</option><option value="No">വന്നില്ല</option></select>
+                </div>
+                <div>
+                    <label class="text-sm text-gray-600">ദുഹ്ർ (Zuhr)</label>
+                    <select id="zuhr" class="w-full p-2 border rounded"><option value="Yes">വന്നു</option><option value="No">വന്നില്ല</option></select>
+                </div>
+                <div>
+                    <label class="text-sm text-gray-600">അസർ (Asr)</label>
+                    <select id="asr" class="w-full p-2 border rounded"><option value="Yes">വന്നു</option><option value="No">വന്നില്ല</option></select>
+                </div>
+                <div>
+                    <label class="text-sm text-gray-600">മഗ്രിബ് (Maghrib)</label>
+                    <select id="maghrib" class="w-full p-2 border rounded"><option value="Yes">വന്നു</option><option value="No">വന്നില്ല</option></select>
+                </div>
+                <div class="col-span-2">
+                    <label class="text-sm text-gray-600">ഇശാഅ് (Isha)</label>
+                    <select id="isha" class="w-full p-2 border rounded"><option value="Yes">വന്നു</option><option value="No">വന്നില്ല</option></select>
+                </div>
+            </div>
+            <div>
+                <label class="block text-gray-700 font-medium mb-1">പരീക്ഷ മാർക്ക്</label>
+                <input type="text" id="examMarks" placeholder="ഉദാഹരണം: 45/50" class="w-full px-4 py-2 border rounded-lg">
+            </div>
+            <div>
+                <label class="block text-gray-700 font-medium mb-1">ടാസ്ക് / ക്വിസ് സ്റ്റാറ്റസ്</label>
+                <input type="text" id="taskStatus" placeholder="ഉദാഹരണം: പൂർത്തിയാക്കി" class="w-full px-4 py-2 border rounded-lg">
+            </div>
+            <button type="submit" class="w-full bg-emerald-600 text-white font-bold py-3 rounded-lg hover:bg-emerald-700">വിവരങ്ങൾ അപ്ഡേറ്റ് ചെയ്യുക</button>
+        </form>
+
+        <div id="statusMsg" class="mt-4 text-center font-medium"></div>
+    </div>
+
+    <script>
+        const scriptURL = 'https://script.google.com/macros/s/AKfycbwTMsuHGxjTmTYgnvy_G93XTn2G3jlLgF9BB2VmqQeXyJqBsWgfiG-J4EXcsQWVfZrrjQ/exec'; // ഇവിടെ നിങ്ങളുടെ URL നൽകുക
+
+        function switchTab(tab) {
+            if(tab === 'studentTab') {
+                document.getElementById('studentForm').classList.remove('hidden');
+                document.getElementById('recordForm').classList.add('hidden');
+                document.getElementById('btnStudentTab').className = "flex-1 py-2 font-bold text-emerald-600 border-b-2 border-emerald-600";
+                document.getElementById('btnRecordTab').className = "flex-1 py-2 font-bold text-gray-500";
+            } else {
+                document.getElementById('studentForm').classList.add('hidden');
+                document.getElementById('recordForm').classList.remove('hidden');
+                document.getElementById('btnRecordTab').className = "flex-1 py-2 font-bold text-emerald-600 border-b-2 border-emerald-600";
+                document.getElementById('btnStudentTab').className = "flex-1 py-2 font-bold text-gray-500";
+            }
+        }
+
+        document.getElementById('studentForm').addEventListener('submit', e => {
+            e.preventDefault();
+            const msg = document.getElementById('statusMsg');
+            msg.textContent = "സേവ് ചെയ്യുന്നുണ്ട്...";
+            
+            const data = {
+                action: "saveStudent",
+                admissionNo: document.getElementById('admissionNo').value,
+                name: document.getElementById('name').value,
+                sonOf: document.getElementById('sonOf').value,
+                mobile: document.getElementById('mobile').value,
+                className: document.getElementById('className').value,
+                photoUrl: document.getElementById('photoUrl').value
+            };
+
+            fetch(scriptURL, { method: 'POST', body: JSON.stringify(data) })
+                .then(res => {
+                    msg.textContent = "കുട്ടിയുടെ വിവരങ്ങൾ വിജയകരമായി സേവ് ചെയ്തു!";
+                    msg.className = "mt-4 text-center font-medium text-emerald-600";
+                    document.getElementById('studentForm').reset();
+                }).catch(err => {
+                    msg.textContent = "എന്തെങ്കിലും തകരാർ സംഭവിച്ചു!";
+                    msg.className = "mt-4 text-center font-medium text-red-600";
+                });
+        });
+
+        document.getElementById('recordForm').addEventListener('submit', e => {
+            e.preventDefault();
+            const msg = document.getElementById('statusMsg');
+            msg.textContent = "അപ്ഡേറ്റ് ചെയ്യുന്നുണ്ട്...";
+            
+            const data = {
+                action: "saveRecord",
+                admissionNo: document.getElementById('recAdmissionNo').value,
+                fajr: document.getElementById('fajr').value,
+                zuhr: document.getElementById('zuhr').value,
+                asr: document.getElementById('asr').value,
+                maghrib: document.getElementById('maghrib').value,
+                isha: document.getElementById('isha').value,
+                examMarks: document.getElementById('examMarks').value,
+                taskStatus: document.getElementById('taskStatus').value
+            };
+
+            fetch(scriptURL, { method: 'POST', body: JSON.stringify(data) })
+                .then(res => {
+                    msg.textContent = "വിവരങ്ങൾ വിജയകരമായി അപ്ഡേറ്റ് ചെയ്തു!";
+                    msg.className = "mt-4 text-center font-medium text-emerald-600";
+                    document.getElementById('recordForm').reset();
+                }).catch(err => {
+                    msg.textContent, "എന്തെങ്കിലും തകരാർ സംഭവിച്ചു!";
+                    msg.className = "mt-4 text-center font-medium text-red-600";
+                });
+        });
+    </script>
+</body>
+</html>
